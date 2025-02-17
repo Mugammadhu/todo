@@ -1,0 +1,37 @@
+body, html {
+    margin: 0;
+    height: 100%;
+}
+
+main {
+    background-color: lightblue;
+    border-radius: 10px;
+    min-height: 300px;
+    position: fixed;  /* Fix the position so it stays in place */
+    top: 35%;         /* Start from the vertical center */
+    left: 100%;       /* Start off-screen to the right */
+    transform: translateY(-50%); /* Vertically center */
+    animation: slideIn 2s ease-in-out 0.5s forwards;
+}
+
+/* Dark theme alert */
+.alert-dark-custom {
+    background-color: #343a40; /* Dark background */
+    color: white; /* White text */
+    border-color: #343a40; /* Same color for border */
+  }
+  
+  .alert-dark-custom .btn-close {
+    color: white; /* White close button */
+  }
+
+  
+@keyframes slideIn {
+    from {
+        left: 100%; /* Start off-screen to the right */
+    }
+    to {
+        left: 50%;  /* End at the center horizontally */
+        transform: translate(-50%, -50%); /* Keep it perfectly centered */
+    }
+}
