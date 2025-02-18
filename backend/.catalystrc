@@ -1,0 +1,30 @@
+{
+  "defaults": {
+    "project": 1,
+    "env": 1
+  },
+  "actives": {
+    "project": 1,
+    "env": 1
+  },
+  "projects": [
+    {
+      "idx": 1,
+      "id": "13466000000008007",
+      "name": "todoBackend",
+      "domain": {
+        "id": "50025042547",
+        "name": "todobackend-60037712443.development"
+      },
+      "timezone": "Asia/Kolkata",
+      "env": [
+        {
+          "idx": 1,
+          "id": "60037712443",
+          "name": "Development",
+          "type": 3
+        }
+      ]
+    }
+  ]
+}
