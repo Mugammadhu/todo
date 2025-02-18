@@ -10,8 +10,16 @@ connectDatabase();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(cors({ origin: "*", methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }));
 
+const corsOptions = {
+  origin: process.env.APPLICATION_URL, // Only allow requests from your frontend domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Authorization', 'Content-Type'], // Allow Authorization and Content-Type headers
+  credentials: true, // Allow cookies and other credentials
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
 
 
 app.get('/',(req,res)=>{
