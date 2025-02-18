@@ -13,7 +13,7 @@ app.use(express.json());
 // app.use(cors({ origin: "*", methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }));
 
 const corsOptions = {
-  origin: 'https://todo-client-alpha-wheat.vercel.app/', // Only allow requests from your frontend domain
+  origin: 'https://todo-client-alpha-wheat.vercel.app', // Only allow requests from your frontend domain
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true, // Allow cookies and other credentials
 };
