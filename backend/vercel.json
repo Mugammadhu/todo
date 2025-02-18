@@ -9,11 +9,7 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/",
-        "methods":["GET,HEAD,PUT,PATCH,POST,DELETE" ],
-        "headers": {
-          "Access-Control-Allow-Origin": "https://todo-client-alpha-wheat.vercel.app/"
-          }
+        "dest": "/"
       }
     ]
   }
