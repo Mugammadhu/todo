@@ -9,11 +9,8 @@ connectDatabase();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-const corsOptions={
-  origin: process.env.APPLICATION_URL,
-  methods:'GET,HEAD,PUT,PATCH,POST,DELETE'
-};
-app.use(cors(corsOptions));
+app.use(cors({ origin: "*", methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }));
+
 
 app.get('/',(req,res)=>{
   res.send("<h1>Server is running with mongodb atlas database</h1><p>welcome to this server</p>")
