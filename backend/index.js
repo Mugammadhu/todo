@@ -10,9 +10,10 @@ connectDatabase();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// app.use(cors({ origin: "*", methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }));
 
 const corsOptions = {
-  origin: "https://todo-client-alpha-wheat.vercel.app/", // Only allow requests from your frontend domain
+  origin: 'https://your-frontend-domain.com', // Only allow requests from your frontend domain
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Authorization', 'Content-Type'], // Allow Authorization and Content-Type headers
   credentials: true, // Allow cookies and other credentials
