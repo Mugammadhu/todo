@@ -3,13 +3,13 @@ const app = express();
 const connectDatabase = require("./db.js");
 const todoModel = require("./models/todoModel.js");
 const cors = require("cors");
+require("dotenv").config(); 
 
 connectDatabase();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
-
+app.use(cors())
 //get
 app.get("/tasks", async (req, res) => {
   const todos = await todoModel.find();
@@ -66,6 +66,7 @@ app.delete("/tasks/:id", async (req, res) => {
   res.json(doc);
 });
 
-app.listen(3000, () => {
-  console.log("server is running at port 3000");
+const PORT= 3000
+app.listen(PORT, () => {
+  console.log(`server is running at port ${PORT}`)
 });

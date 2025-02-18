@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState ,useRef} from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import './app.css'
-
+import "./app.css";
 
 const Notification = ({ message, type, onClose }) => {
   if (!message) return null;
 
   return (
-    <div className={`alert alert-${type} alert-dismissible fade show`} role="alert">
+    <div
+      className={`alert alert-${type} alert-dismissible fade show`}
+      role="alert"
+    >
       {message}
       <button type="button" className="btn-close" onClick={onClose}></button>
     </div>
@@ -23,16 +25,19 @@ const App = () => {
   const [notification, setNotification] = useState({ message: "", type: "" });
   const [showConfirm, setShowConfirm] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
-  const inputRef=useRef(null)
+  const inputRef = useRef(null);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/tasks")
+      .get(`${import.meta.env.VITE_SEVER_API_URL}/tasks`)
       .then((res) => {
         setTasks(res.data);
       })
       .catch((err) => {
-        console.log("Server connection issue. Please check your internet connection.", err);
+        console.log(
+          "Server connection issue. Please check your internet connection.",
+          err
+        );
       });
   }, []);
 
@@ -47,7 +52,11 @@ const App = () => {
     e.preventDefault();
     if (!todo.trim()) return;
     axios
-      .post("http://localhost:3000/tasks", { todo }, { headers: { "Content-Type": "application/json" } })
+      .post(
+        `${import.meta.env.VITE_SEVER_API_URL}/tasks`,
+        { todo },
+        { headers: { "Content-Type": "application/json" } }
+      )
       .then((res) => {
         setTasks([...tasks, res.data]);
         setTodo("");
@@ -64,7 +73,7 @@ const App = () => {
       inputRef.current.focus(); // Focus input when editing starts
     }
   }, [editingTaskId]);
-  
+
   const handleUpdate = (id, todo) => {
     setEditingTaskId(id);
     setUpdatedTodo(todo);
@@ -74,9 +83,17 @@ const App = () => {
     e.preventDefault();
     if (!updatedTodo.trim()) return;
     axios
-      .put(`http://localhost:3000/tasks/${id}`, { todo: updatedTodo }, { headers: { "Content-Type": "application/json" } })
+      .put(
+        `${import.meta.env.VITE_SEVER_API_URL}/tasks/${id}`,
+        { todo: updatedTodo },
+        { headers: { "Content-Type": "application/json" } }
+      )
       .then(() => {
-        setTasks((prevTask) => prevTask.map((task) => (task._id === id ? { ...task, todo: updatedTodo } : task)));
+        setTasks((prevTask) =>
+          prevTask.map((task) =>
+            task._id === id ? { ...task, todo: updatedTodo } : task
+          )
+        );
         setEditingTaskId(null);
         setUpdatedTodo("");
         showNotification("Task updated successfully!", "success");
@@ -93,15 +110,18 @@ const App = () => {
   };
 
   const confirmDelete = () => {
-    axios.delete(`http://localhost:3000/tasks/${taskToDelete}`).then(() => {
-      setTasks(tasks.filter((task) => task._id !== taskToDelete));
-      setShowConfirm(false);
-      showNotification("Task deleted successfully!", "success");
-    }).catch((err) => {
-      console.log("Delete todo error", err);
-      setShowConfirm(false);
-      showNotification("Error deleting task.", "danger");
-    });
+    axios
+      .delete(`${import.meta.env.VITE_SEVER_API_URL}/tasks/${taskToDelete}`)
+      .then(() => {
+        setTasks(tasks.filter((task) => task._id !== taskToDelete));
+        setShowConfirm(false);
+        showNotification("Task deleted successfully!", "success");
+      })
+      .catch((err) => {
+        console.log("Delete todo error", err);
+        setShowConfirm(false);
+        showNotification("Error deleting task.", "danger");
+      });
   };
 
   const cancelDelete = () => {
@@ -140,10 +160,16 @@ const App = () => {
       <ul className="list-group w-75 w-md-50 mt-4">
         {tasks.length > 0 &&
           tasks.map((task) => (
-            <li key={task._id} className="list-group-item d-flex justify-content-between align-items-center mb-4 rounded-2">
+            <li
+              key={task._id}
+              className="list-group-item d-flex justify-content-between align-items-center mb-4 rounded-2"
+            >
               {editingTaskId === task._id ? (
                 <>
-                  <form onSubmit={(e) => handleUpdateTask(e, task._id)} className="d-flex gap-2 w-100">
+                  <form
+                    onSubmit={(e) => handleUpdateTask(e, task._id)}
+                    className="d-flex gap-2 w-100"
+                  >
                     <input
                       type="text"
                       id="update"
@@ -156,7 +182,10 @@ const App = () => {
                     <button type="submit" className="btn btn-success">
                       Update
                     </button>
-                    <button onClick={() => setEditingTaskId(null)} className="btn btn-secondary">
+                    <button
+                      onClick={() => setEditingTaskId(null)}
+                      className="btn btn-secondary"
+                    >
                       Cancel
                     </button>
                   </form>
@@ -165,10 +194,16 @@ const App = () => {
                 <>
                   <span className="w-75">{task.todo}</span>
                   <div className="w-25 d-flex justify-content-end">
-                    <button onClick={() => handleUpdate(task._id, task.todo)} className="btn btn-warning btn-sm me-2">
+                    <button
+                      onClick={() => handleUpdate(task._id, task.todo)}
+                      className="btn btn-warning btn-sm me-2"
+                    >
                       Edit
                     </button>
-                    <button onClick={() => handleDelete(task._id)} className="btn btn-danger btn-sm">
+                    <button
+                      onClick={() => handleDelete(task._id)}
+                      className="btn btn-danger btn-sm"
+                    >
                       Delete
                     </button>
                   </div>
@@ -180,19 +215,44 @@ const App = () => {
 
       {/* Confirm Delete Modal */}
       {showConfirm && (
-        <div className="modal fade show" style={{ display: "block" }} tabIndex="-1" role="dialog" aria-labelledby="confirmDeleteModal" aria-hidden="true">
+        <div
+          className="modal fade show"
+          style={{ display: "block" }}
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="confirmDeleteModal"
+          aria-hidden="true"
+        >
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="confirmDeleteModal">Confirm Deletion</h5>
-                <button type="button" className="btn-close" onClick={cancelDelete}></button>
+                <h5 className="modal-title" id="confirmDeleteModal">
+                  Confirm Deletion
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={cancelDelete}
+                ></button>
               </div>
               <div className="modal-body">
                 Are you sure you want to delete this task?
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={cancelDelete}>Cancel</button>
-                <button type="button" className="btn btn-danger" onClick={confirmDelete}>Delete</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={cancelDelete}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={confirmDelete}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </div>
