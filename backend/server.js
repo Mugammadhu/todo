@@ -14,6 +14,10 @@ const corsOptions={
   methods:'GET,HEAD,PUT,PATCH,POST,DELETE'
 };
 app.use(cors(corsOptions));
+
+app.get('/',(req,res)=>{
+  res.send("<h1>Server is running with mongodb atlas database</h1><p>welcome to this server</p>")
+})
 //get
 app.get("/tasks", async (req, res) => {
   const todos = await todoModel.find();
