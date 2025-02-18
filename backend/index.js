@@ -12,7 +12,7 @@ app.use(express.json());
 
 
 const corsOptions = {
-  origin: process.env.APPLICATION_URL, // Only allow requests from your frontend domain
+  origin: "https://todo-client-alpha-wheat.vercel.app/", // Only allow requests from your frontend domain
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Authorization', 'Content-Type'], // Allow Authorization and Content-Type headers
   credentials: true, // Allow cookies and other credentials
