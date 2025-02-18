@@ -9,13 +9,9 @@ connectDatabase();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-const corsOptions={
-  origin:"https://todo-client-alpha-wheat.vercel.app/",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE" 
 
-}
+app.use(cors({ origin: "*", methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }));
 
-app.use(cors(corsOptions))
 
 
 app.get('/',(req,res)=>{
